@@ -1,7 +1,6 @@
 import { Table } from './Table';
 import { Direction } from './Direction';
 
-
 //robot does NOT know about input commands or output formatting only manages its own position and orientation
 export class Robot {
   private x: number | null = null;
@@ -22,7 +21,6 @@ export class Robot {
     this.direction = direction;
   }
 
-
 // shows if the robot has been successfully placed
   isPlaced(): boolean {
     return this.x !== null && this.y !== null && this.direction !== null;
@@ -41,4 +39,33 @@ export class Robot {
       direction: this.direction as Direction
     };
   }
+
+// incriments robot move one unit forward in the direction faced, ignores if invalid
+  move(): void {
+  if (!this.isPlaced()) return;
+
+  let newX = this.x as number;
+  let newY = this.y as number;
+
+  switch (this.direction) {
+    case Direction.NORTH:
+      newY += 1; // moving up
+      break;
+    case Direction.SOUTH:
+      newY -= 1; // moving down
+      break;
+    case Direction.EAST:
+      newX += 1; // moving right
+      break;
+    case Direction.WEST:
+      newX -= 1; // moving left
+      break;
+  }
+
+  // Only update the position if it's valid
+  if (this.table.isValidPosition(newX, newY)) {
+    this.x = newX;
+    this.y = newY;
+  }
+}
 }

@@ -44,4 +44,35 @@ describe('Robot placement', () => {
       direction: Direction.SOUTH
     });
   });
+
+    it('moves north within bounds', () => {
+    robot.place(0, 0, Direction.NORTH);
+    robot.move();
+    expect(robot.getPosition()).toEqual({ x: 0, y: 1, direction: Direction.NORTH });
+  });
+
+  it('prevents falling off the table', () => {
+    robot.place(0, 4, Direction.NORTH); // top edge
+    robot.move();
+    expect(robot.getPosition()).toEqual({ x: 0, y: 4, direction: Direction.NORTH });
+  });
+
+  it('moves in all directions within bounds', () => {
+    robot.place(2, 2, Direction.SOUTH);
+    robot.move();
+    expect(robot.getPosition()).toEqual({ x: 2, y: 1, direction: Direction.SOUTH });
+
+    robot.place(2, 2, Direction.EAST);
+    robot.move();
+    expect(robot.getPosition()).toEqual({ x: 3, y: 2, direction: Direction.EAST });
+
+    robot.place(2, 2, Direction.WEST);
+    robot.move();
+    expect(robot.getPosition()).toEqual({ x: 1, y: 2, direction: Direction.WEST });
+  });
+
+  it('ignores move if robot not placed', () => {
+    robot.move();
+    expect(robot.getPosition()).toBeNull();
+  });
 });
