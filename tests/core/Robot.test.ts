@@ -76,3 +76,49 @@ describe('Robot placement', () => {
     expect(robot.getPosition()).toBeNull();
   });
 });
+
+describe('Robot rotation', () => {
+  let table: Table;
+  let robot: Robot;
+
+  beforeEach(() => {
+    table = new Table(5, 5);
+    robot = new Robot(table);
+  });
+
+  it('rotates left correctly', () => {
+    robot.place(2, 2, Direction.NORTH);
+    robot.rotateLeft();
+    expect(robot.getPosition()?.direction).toBe(Direction.WEST);
+
+    robot.rotateLeft();
+    expect(robot.getPosition()?.direction).toBe(Direction.SOUTH);
+
+    robot.rotateLeft();
+    expect(robot.getPosition()?.direction).toBe(Direction.EAST);
+
+    robot.rotateLeft();
+    expect(robot.getPosition()?.direction).toBe(Direction.NORTH);
+  });
+
+  it('rotates right correctly', () => {
+    robot.place(2, 2, Direction.NORTH);
+    robot.rotateRight();
+    expect(robot.getPosition()?.direction).toBe(Direction.EAST);
+
+    robot.rotateRight();
+    expect(robot.getPosition()?.direction).toBe(Direction.SOUTH);
+
+    robot.rotateRight();
+    expect(robot.getPosition()?.direction).toBe(Direction.WEST);
+
+    robot.rotateRight();
+    expect(robot.getPosition()?.direction).toBe(Direction.NORTH);
+  });
+
+  it('ignores rotation if robot not placed', () => {
+    robot.rotateLeft();
+    robot.rotateRight();
+    expect(robot.getPosition()).toBeNull();
+  });
+});

@@ -29,3 +29,5 @@ export function rotateRight(direction: Direction): Direction {
     (index + 1) % DIRECTIONS_CLOCKWISE.length
   ];
 }
+
+

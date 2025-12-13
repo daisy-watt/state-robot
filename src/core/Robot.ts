@@ -1,5 +1,5 @@
 import { Table } from './Table';
-import { Direction } from './Direction';
+import { Direction, rotateLeft, rotateRight } from './Direction';
 
 //robot does NOT know about input commands or output formatting only manages its own position and orientation
 export class Robot {
@@ -42,30 +42,42 @@ export class Robot {
 
 // incriments robot move one unit forward in the direction faced, ignores if invalid
   move(): void {
-  if (!this.isPlaced()) return;
+    if (!this.isPlaced()) return;
 
-  let newX = this.x as number;
-  let newY = this.y as number;
+    let newX = this.x as number;
+    let newY = this.y as number;
 
-  switch (this.direction) {
-    case Direction.NORTH:
-      newY += 1; // moving up
-      break;
-    case Direction.SOUTH:
-      newY -= 1; // moving down
-      break;
-    case Direction.EAST:
-      newX += 1; // moving right
-      break;
-    case Direction.WEST:
-      newX -= 1; // moving left
-      break;
+    switch (this.direction) {
+        case Direction.NORTH:
+        newY += 1; // moving up
+        break;
+        case Direction.SOUTH:
+        newY -= 1; // moving down
+        break;
+        case Direction.EAST:
+        newX += 1; // moving right
+        break;
+        case Direction.WEST:
+        newX -= 1; // moving left
+        break;
+    }
+
+    // Only update the position if it's valid
+    if (this.table.isValidPosition(newX, newY)) {
+        this.x = newX;
+        this.y = newY;
+    }
   }
 
-  // Only update the position if it's valid
-  if (this.table.isValidPosition(newX, newY)) {
-    this.x = newX;
-    this.y = newY;
-  }
-}
+//rotate the robot 90 degrees to the left.
+  rotateLeft(): void {
+    if (!this.isPlaced()) return;
+    this.direction = rotateLeft(this.direction as Direction);
+    }
+
+//rotate the robot 90 degrees to the right.
+  rotateRight(): void {
+    if (!this.isPlaced()) return;
+    this.direction = rotateRight(this.direction as Direction);
+    }
 }
