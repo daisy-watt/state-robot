@@ -72,12 +72,18 @@ export class Robot {
 //rotate the robot 90 degrees to the left.
   rotateLeft(): void {
     if (!this.isPlaced()) return;
-    this.direction = rotateLeft(this.direction as Direction);
+        this.direction = rotateLeft(this.direction as Direction);
     }
 
 //rotate the robot 90 degrees to the right.
   rotateRight(): void {
     if (!this.isPlaced()) return;
-    this.direction = rotateRight(this.direction as Direction);
+        this.direction = rotateRight(this.direction as Direction);
+    }
+
+//returns string (Format: X,Y,DIRECTION) of robot's position and direction
+  report(): string | null {
+    if (!this.isPlaced()) return null;
+        return `${this.x},${this.y},${this.direction}`;
     }
 }

@@ -122,3 +122,34 @@ describe('Robot rotation', () => {
     expect(robot.getPosition()).toBeNull();
   });
 });
+
+describe('Robot report', () => {
+  let table: Table;
+  let robot: Robot;
+
+  beforeEach(() => {
+    table = new Table(5, 5);
+    robot = new Robot(table);
+  });
+
+  it('returns formatted position when placed', () => {
+    robot.place(1, 2, Direction.NORTH);
+    expect(robot.report()).toBe('1,2,NORTH');
+  });
+
+  it('returns null if robot not placed', () => {
+    expect(robot.report()).toBeNull();
+  });
+
+  it('reflects updated position after move', () => {
+    robot.place(0, 0, Direction.NORTH);
+    robot.move();
+    expect(robot.report()).toBe('0,1,NORTH');
+  });
+
+  it('reflects updated direction after rotation', () => {
+    robot.place(0, 0, Direction.NORTH);
+    robot.rotateLeft();
+    expect(robot.report()).toBe('0,0,WEST');
+  });
+});
